@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Search History</h1>
+{% if entries %}
+  <ul class="history-list">
+    {% for e in entries %}
+      <li>
+        <strong>{{ e.city }}</strong> — searched at {{ e.searched_at }}
+        {% if e.cached_at %}
+          <div class="sm">Cached at: {{ e.cached_at }}</div>
+          {% if e.weather %}
+            <div class="sm">Temp: {{ e.weather.main.temp }} °C — {{ e.weather.weather[0].description }}</div>
+          {% endif %}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No history yet — search for a city to create records.</p>
+{% endif %}
+{% endblock %}
