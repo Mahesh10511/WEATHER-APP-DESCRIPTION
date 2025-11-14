@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Check Weather</h1>
+<form method="post" class="search-form">
+  <input name="city" placeholder="Enter city name (e.g., London)" required>
+  <button type="submit">Get Weather</button>
+</form>
+
+{% if weather %}
+  <section class="weather-card">
+    <h2>{{ city|title }}</h2>
+    {% if weather.name %}<p><strong>Location:</strong> {{ weather.name }}, {{ weather.sys.country }}</p>{% endif %}
+    {% if weather.main %}
+      <p><strong>Temperature:</strong> {{ weather.main.temp }} °C</p>
+      <p><strong>Feels like:</strong> {{ weather.main.feels_like }} °C</p>
+      <p><strong>Humidity:</strong> {{ weather.main.humidity }}%</p>
+    {% endif %}
+    {% if weather.weather %}
+      <p><strong>Condition:</strong> {{ weather.weather[0].main }} — {{ weather.weather[0].description }}</p>
+    {% endif %}
+    <p class="muted">Source: OpenWeatherMap {% if cached %}(cached){% endif %}</p>
+  </section>
+{% else %}
+  <p>Enter a city and press Get Weather. If no API key is configured the app will show an error when live lookup is attempted.</p>
+{% endif %}
+{% endblock %}
